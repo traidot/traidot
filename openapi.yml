@@ -1,0 +1,2611 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Swagger kokoromil - OpenAPI 3.0
+  description: Swagger kokoromil
+servers:
+  - url: http://localhost:8000/api/
+tags:
+  - name: Auth
+    description: Auth
+  - name: Master
+    description: Master
+  - name: Transaction
+    description: Transaction
+paths:
+  /auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: サインアップ
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+
+        - name: identifier
+          in: query
+          description: ログインID
+          required: true
+          schema:
+            type: string
+
+        - name: password
+          in: query
+          description: パスワード
+          required: true
+          schema:
+            type: string
+
+        - name: role
+          in: query
+          description: 権限
+          required: true
+          schema:
+            type: integer
+        - name: platform
+          in: query
+          description: プラットフォーム
+          required: true
+          schema:
+            type: integer
+        - name: lastname
+          in: query
+          description: 姓
+          required: true
+          schema:
+            type: string
+        - name: firstname
+          in: query
+          description: 名
+          required: true
+          schema:
+            type: string
+        - name: lastname_kana
+          in: query
+          description: セイ
+          schema:
+            type: string
+        - name: firstname_kana
+          in: query
+          description: メイ
+          schema:
+            type: string
+        - name: gender
+          in: query
+          description: 性別
+          schema:
+            type: integer
+        - name: birthday
+          in: query
+          description: 誕生日
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: メールアドレス
+          schema:
+            type: string
+        - name: tel
+          in: query
+          description: 電話番号(ハイフン有）
+          schema:
+            type: string
+        - name: zip_code
+          in: query
+          description: 郵便番号(ハイフン有)
+          schema:
+            type: string
+        - name: address
+          in: query
+          description: 住所
+          schema:
+            type: string
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+                  access_token:
+                    type: string
+                    description: アクセストークン
+                  user_id:
+                    type: integer
+                    description: ユーザーID
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: ログイン
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+
+        - name: identifier
+          in: query
+          description: ログインID
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: パスワード
+          required: true
+          schema:
+            type: string
+        - name: platform
+          in: query
+          description: プラットフォーム
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+                  access_token:
+                    type: string
+                    description: アクセストークン
+                  user_id:
+                    type: integer
+                    description: ユーザーID
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /auth/google:
+    get:
+      tags:
+        - Auth
+      summary: SNSログイン (google)
+      responses:
+        "100":
+          description: redirect
+
+  /auth/line:
+    get:
+      tags:
+        - Auth
+      summary: SNSログイン (line)
+      responses:
+        "100":
+          description: redirect
+  /auth/facebook:
+    get:
+      tags:
+        - Auth
+      summary: SNSログイン (facebook)
+      responses:
+        "100":
+          description: redirect
+  /auth/apple:
+    get:
+      tags:
+        - Auth
+      summary: SNSログイン (apple)
+      responses:
+        "100":
+          description: redirect
+
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: ログアウト
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザーID
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /user/profile:
+    get:
+      tags:
+        - Master
+      summary: プロフィール取得
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザーID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+                  profile:
+                    type: array
+                    description: プロフィール配列
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /user/profile/save:
+    post:
+      tags:
+        - Master
+      summary: プロフィール保存
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザーID
+          required: true
+          schema:
+            type: integer
+
+        - name: lastname
+          in: query
+          description: 姓
+          required: true
+          schema:
+            type: string
+        - name: firstname
+          in: query
+          description: 名
+          required: true
+          schema:
+            type: string
+        - name: lastname_kana
+          in: query
+          description: セイ
+          schema:
+            type: string
+        - name: firstname_kana
+          in: query
+          description: メイ
+          schema:
+            type: string
+        - name: gender
+          in: query
+          description: 性別
+          schema:
+            type: integer
+        - name: birthday
+          in: query
+          description: 誕生日
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: メールアドレス
+          schema:
+            type: string
+        - name: tel
+          in: query
+          description: 電話番号
+          schema:
+            type: string
+        - name: zip_code
+          in: query
+          description: 便番号
+          schema:
+            type: string
+        - name: address
+          in: query
+          description: 住所
+          schema:
+            type: string
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /home-group:
+    get:
+      tags:
+        - Master
+      summary: ホームグループ取得
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザーID
+          required: true
+          schema:
+            type: string
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+                  group:
+                    type: object
+                    description: グループ詳細オブジェクト
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /home-group/create:
+    post:
+      tags:
+        - Master
+      summary: ホームグループ保存
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザーID
+          required: true
+          schema:
+            type: integer
+        - name: name
+          in: query
+          description: グループ名
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /home-group/member/save:
+    post:
+      tags:
+        - Master
+      summary: ホームグループメンバー保存
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+
+        - name: home_group_id
+          in: query
+          description: ホームグループID
+          required: true
+          schema:
+            type: integer
+        - name: lastname
+          in: query
+          description: 姓
+          required: true
+          schema:
+            type: string
+        - name: firstname
+          in: query
+          description: 名
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: メールアドレス
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /home-group/member/delete:
+    post:
+      tags:
+        - Master
+      summary: ホームグループメンバー削除
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+
+        - name: home_group_id
+          in: query
+          description: ホームグループID
+          required: true
+          schema:
+            type: integer
+        - name: home_group_member_id
+          in: query
+          description: ホームグループメンバーID
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /home-group/device/save:
+    post:
+      tags:
+        - Master
+      summary: ホームグループデバイス保存
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+        - name: home_group_id
+          in: query
+          description: ホームグループID
+          required: true
+          schema:
+            type: integer
+        - name: device_code
+          in: query
+          description: 機器保有ID
+          required: true
+          schema:
+            type: string
+        - name: device_name
+          in: query
+          description: デバイス名
+          required: true
+          schema:
+            type: string
+        - name: remark
+          in: query
+          description: メモ
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /home-group/device/delete:
+    post:
+      tags:
+        - Master
+      summary: ホームグループデーバイス削除
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+        - name: home_group_id
+          in: query
+          description: ホームグループID
+          required: true
+          schema:
+            type: integer
+        - name: home_group_device_id
+          in: query
+          description: ホームグループデバイスID
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /company-group/device/validate:
+    get:
+      tags:
+        - Transaction
+      summary: 企業デバイスペア妥当性チェック
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+        - name: device_code
+          in: query
+          description: デバイスコード
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /hospital-group/device/validate:
+    get:
+      tags:
+        - Transaction
+      summary: 病院デバイスペア妥当性チェック
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+        - name: device_code
+          in: query
+          description: デバイスコード
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /kokoromil-exam/entry:
+    post:
+      tags:
+        - Transaction
+      summary: kokoromil診断申し込み
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+        - name: order_id
+          in: query
+          description: 決済オーダーID
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /kokoromil-exam/question/entry:
+    post:
+      tags:
+        - Transaction
+      summary: kokoromil診断アンケート登録
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+        - name: symptoms
+          in: query
+          description: "症状:なし/動悸/胸痛/息切れ/めまい/(その他)"
+          required: true
+          schema:
+            type: string
+        - name: diabetes
+          in: query
+          description: 糖尿病
+          required: true
+          schema:
+            type: boolean
+        - name: cholesterol
+          in: query
+          description: 脂質異常
+          required: true
+          schema:
+            type: boolean
+        - name: hbp
+          in: query
+          description: 高血圧症
+          required: true
+          schema:
+            type: boolean
+        - name: heart_disease
+          in: query
+          description: 心臓疾患
+          required: true
+          schema:
+            type: string
+        - name: brain_disease
+          in: query
+          description: 脳疾患
+          required: true
+          schema:
+            type: string
+        - name: cardiovascular_disease
+          in: query
+          description: 血管疾患
+          required: true
+          schema:
+            type: string
+        - name: pacemaker
+          in: query
+          description: ペースメーカー
+          required: true
+          schema:
+            type: boolean
+        - name: af
+          in: query
+          description: 心房細動
+          required: true
+          schema:
+            type: boolean
+        - name: chronic_fatigue
+          in: query
+          description: 慢性疲労
+          required: true
+          schema:
+            type: integer
+        - name: depression
+          in: query
+          description: 憂鬱
+          required: true
+          schema:
+            type: integer
+        - name: anxiiety
+          in: query
+          description: 不安
+          required: true
+          schema:
+            type: integer
+        - name: hyposomia
+          in: query
+          description: 不眠
+          required: true
+          schema:
+            type: integer
+        - name: oversleep
+          in: query
+          description: 寝過ぎ
+          required: true
+          schema:
+            type: integer
+        - name: smoking_history
+          in: query
+          description: "喫煙歴:NoX本Y年 QuitZ年"
+          required: true
+          schema:
+            type: string
+        - name: drinkiing
+          in: query
+          description: "飲酒NoX回/週"
+          required: true
+          schema:
+            type: string
+        - name: exercise
+          in: query
+          description: "運動NoX回/週"
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /kokoromil-exam/results:
+    get:
+      tags:
+        - Transaction
+      summary: kokoromil診断結果一覧
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+                  examinations:
+                    type: array
+                    description: 診断結果オブジェクト配列
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /kokolog/summary:
+    get:
+      tags:
+        - Transaction
+      summary: KokologClientサマリー一覧
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+                  mesurements:
+                    type: array
+                    description: 心電図データオブジェクト配列
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /kokoromil/summary:
+    get:
+      tags:
+        - Transaction
+      summary: KokoromilHealthサマリー一覧
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /kokolog/summary/save:
+    post:
+      tags:
+        - Transaction
+      summary: KokologClientサマリー保存
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+
+        - name: timestamp
+          in: query
+          description: 計測タイムスタンプ
+          required: true
+          schema:
+            type: string
+        - name: cardiogram_raw
+          in: query
+          description: 心音計測データ
+          required: true
+          schema:
+            type: string
+        - name: cardiogram_qrs_position
+          in: query
+          description: 睡眠計測データ
+          required: true
+          schema:
+            type: string
+        - name: gyro_raw
+          in: query
+          description: 血圧データ
+          required: true
+          schema:
+            type: string
+        - name: gyro_1sec_verage
+          in: query
+          description: 歩数データ
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /kokoromil/summary/save:
+    post:
+      tags:
+        - Transaction
+      summary: KokomilHealthサマリー保存
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+        - name: timestamp
+          in: query
+          description: 計測タイムスタンプ
+          required: true
+          schema:
+            type: string
+        - name: cardiogram_raw
+          in: query
+          description: 心音計測データ
+          required: true
+          schema:
+            type: string
+        - name: cardiogram_qrs_position
+          in: query
+          description: 睡眠計測データ
+          required: true
+          schema:
+            type: string
+        - name: gyro_raw
+          in: query
+          description: 血圧データ
+          required: true
+          schema:
+            type: string
+        - name: gyro_1sec_verage
+          in: query
+          description: 歩数データ
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /analysis/open:
+    post:
+      tags:
+        - Transaction
+      summary: Analysis監視開始
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /analysis/update:
+    post:
+      tags:
+        - Transaction
+      summary: Analysis監視継続
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+  /analysis/close:
+    post:
+      tags:
+        - Transaction
+      summary: Analysis監視停止
+      parameters:
+        - name: api-key
+          in: header
+          description: Api key
+          required: true
+          schema:
+            type: string
+        - name: access-token
+          in: header
+          description: Access Token
+          required: true
+          schema:
+            type: string
+
+        - name: user_id
+          in: query
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "100":
+          description: 正常処理完了
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+
+        "200":
+          description: リクエストパラーメタエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "300":
+          description: データ不整合エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "400":
+          description: データベース保存処理エラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
+        "500":
+          description: タイムアウトエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: リザルトコード
+                  message:
+                    type: string
+                    description: 結果メッセージ
